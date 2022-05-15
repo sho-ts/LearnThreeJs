@@ -1,9 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,visualstudiocode,node
 
-### Three.js ###
-three.js
-
+/dist/assets
 
 ### macOS ###
 # General
@@ -130,7 +128,6 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
