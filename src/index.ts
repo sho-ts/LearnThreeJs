@@ -10,29 +10,22 @@ const renderer = new t.WebGL1Renderer({
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(width, height);
 
-const scene = new t.Scene();
-
 const camera = new t.PerspectiveCamera(45, width / height, 1, 10000);
 camera.position.set(0, 0, +1000);
 
-const geometry = new t.BoxGeometry(500, 500, 500);
-
-const material = new t.MeshStandardMaterial({
-  color: 0x0000ff,
-});
-
-const box = new t.Mesh(geometry, material);
-
-scene.add(box);
+const box = new t.Mesh(
+  new t.BoxGeometry(500, 500, 500),
+  new t.MeshStandardMaterial({
+    color: 0x0000ff,
+  })
+);
 
 const light = new t.DirectionalLight(0xffffff);
 light.intensity = 2;
-
-scene.add(light);
-
 light.position.set(1, 1, 1);
 
-renderer.render(scene, camera);
+const scene = new t.Scene();
+[light, box].forEach((item) => scene.add(item));
 
 const tick = () => {
   requestAnimationFrame(tick);
