@@ -1,6 +1,26 @@
 import * as t from "three";
 import earth from "./assets/earth.jpg";
 
+let rot = 0;
+let position = 0;
+let currentMouseX = 0;
+
+let interval: number;
+
+document.addEventListener("mousemove", (event) => {
+  currentMouseX = event.pageX;
+});
+
+document.addEventListener("mousedown", () => {
+  interval = setInterval(() => {
+    position = currentMouseX;
+  }, 100);
+});
+
+document.addEventListener("mouseup", () => {
+  clearInterval(interval);
+});
+
 const renderer = new t.WebGL1Renderer({
   canvas: document.getElementById("root")!,
 });
@@ -39,16 +59,27 @@ const sphere = new t.Mesh(
 const light = new t.DirectionalLight(0xffffff);
 light.position.set(1, 1, 90);
 
-[light, sphere, box].forEach((item) => scene.add(item));
+const light2 = new t.AmbientLight(0xffffff);
+
+[light2, sphere, box].forEach((item) => scene.add(item));
 
 const tick = () => {
   requestAnimationFrame(tick);
 
   sphere.rotation.x += 0.001;
-  sphere.rotation.y += 0.001;
 
   box.rotation.x += 0.01;
   box.rotation.y += 0.01;
+
+  const targetRot = (position / window.innerWidth) * 360;
+  rot += (targetRot - rot) * 0.02;
+
+  const radian = (rot * Math.PI) / 180;
+
+  camera.position.x = 1000 * Math.sin(radian);
+  camera.position.z = 1000 * Math.cos(radian);
+
+  camera.lookAt(new t.Vector3(0, 0, 0));
 
   render();
 };
