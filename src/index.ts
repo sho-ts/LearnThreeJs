@@ -1,16 +1,18 @@
 import * as t from "three";
 
-const width = 960;
-const height = 540;
-
 const renderer = new t.WebGL1Renderer({
   canvas: document.getElementById("root")!,
 });
 
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(width, height);
+renderer.setSize(window.innerWidth, window.innerHeight);
 
-const camera = new t.PerspectiveCamera(45, width / height, 1, 10000);
+const camera = new t.PerspectiveCamera(
+  45,
+  window.innerWidth / window.innerHeight,
+  1,
+  10000
+);
 camera.position.set(0, 0, +1000);
 
 const box = new t.Mesh(
