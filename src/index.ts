@@ -1,4 +1,5 @@
 import * as t from "three";
+import earth from "./assets/earth.jpg";
 
 const renderer = new t.WebGL1Renderer({
   canvas: document.getElementById("root")!,
@@ -16,26 +17,35 @@ const camera = new t.PerspectiveCamera(
 camera.position.set(0, 0, +1000);
 
 const box = new t.Mesh(
-  new t.BoxGeometry(500, 500, 500),
+  new t.BoxGeometry(100, 100, 100),
   new t.MeshStandardMaterial({
-    color: 0x0000ff,
+    color: 0x5555ff,
+  })
+);
+
+const sphere = new t.Mesh(
+  new t.SphereGeometry(300, 30, 30),
+  new t.MeshStandardMaterial({
+    map: new t.TextureLoader().load(earth),
   })
 );
 
 const light = new t.DirectionalLight(0xffffff);
-light.intensity = 2;
+light.intensity = 1;
 light.position.set(1, 1, 1);
 
 const scene = new t.Scene();
-[light, box].forEach((item) => scene.add(item));
+[light, sphere].forEach((item) => scene.add(item));
+
+const render = () => renderer.render(scene, camera);
 
 const tick = () => {
   requestAnimationFrame(tick);
 
-  box.rotation.x += 0.01;
-  box.rotation.y += 0.01;
+  sphere.rotation.x += 0.001;
+  sphere.rotation.y += 0.001;
 
-  renderer.render(scene, camera);
+  render();
 };
 
 tick();
