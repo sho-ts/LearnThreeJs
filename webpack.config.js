@@ -9,11 +9,16 @@ module.exports = {
     publicPath: path.resolve(__dirname, '/assets/'),
   },
   module: {
-    rules: [{
-      test: /\.(js|ts)?$/,
-      use: 'ts-loader',
-      exclude: /node_modules/
-    }]
+    rules: [
+      {
+        test: /\.(js|ts)?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.(jpg|png|jpeg|gif)$/,
+        loader: 'url-loader'
+      }]
   },
   resolve: {
     extensions: ['.ts', '.js', '.json'],
