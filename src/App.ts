@@ -23,10 +23,12 @@ class App {
     this.scene = new t.Scene();
   }
 
-  public init() {
+  public init(objects?: t.Object3D<t.Event>[]) {
     this.initRenderer();
     this.initCamera();
     this.initControls();
+
+    objects && objects.forEach((obj) => this.scene.add(obj));
   }
 
   private initRenderer() {

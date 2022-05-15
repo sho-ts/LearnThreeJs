@@ -4,7 +4,6 @@ import Light from "./components/Light";
 import App from "./App";
 
 const app = new App();
-app.init();
 
 const earth = new Earth();
 const light = new Light({
@@ -13,7 +12,7 @@ const light = new Light({
   position: [0, 0, 90],
 }).getObject();
 
-[light, earth].forEach((item) => app.scene.add(item));
+app.init([light, earth]);
 
 const tick = () => {
   requestAnimationFrame(tick);
