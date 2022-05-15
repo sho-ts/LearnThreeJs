@@ -28,5 +28,6 @@ module.exports = {
     open: true,
     hot: true,
     static: path.resolve(__dirname, 'dist'),
+    host: '0.0.0.0',
   },
 }
