@@ -21,6 +21,7 @@ class App {
     );
     this.controls = new OrbitControls(this.camera, this.canvas);
     this.scene = new t.Scene();
+    this.scene.fog = new t.Fog(0x000000, 50, 8000)
   }
 
   public init(objects?: t.Object3D<t.Event>[]) {
