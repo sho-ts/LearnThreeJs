@@ -1,28 +1,11 @@
 import * as t from "three";
 import earth from "./assets/earth.jpg";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-let rot = 0;
-let position = 0;
-let currentMouseX = 0;
-
-let interval: number;
-
-document.addEventListener("mousemove", (event) => {
-  currentMouseX = event.pageX;
-});
-
-document.addEventListener("mousedown", () => {
-  interval = setInterval(() => {
-    position = currentMouseX;
-  }, 100);
-});
-
-document.addEventListener("mouseup", () => {
-  clearInterval(interval);
-});
+const canvas = document.getElementById("root")!;
 
 const renderer = new t.WebGL1Renderer({
-  canvas: document.getElementById("root")!,
+  canvas,
 });
 
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -35,6 +18,10 @@ const camera = new t.PerspectiveCamera(
   10000
 );
 camera.position.set(0, 0, +1000);
+
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.2;
 
 const scene = new t.Scene();
 
@@ -57,7 +44,7 @@ const sphere = new t.Mesh(
 );
 
 const light = new t.DirectionalLight(0xffffff);
-light.position.set(1, 1, 90);
+light.position.set(1, 1, 30);
 
 const light2 = new t.AmbientLight(0xffffff);
 
@@ -70,16 +57,6 @@ const tick = () => {
 
   box.rotation.x += 0.01;
   box.rotation.y += 0.01;
-
-  const targetRot = (position / window.innerWidth) * 360;
-  rot += (targetRot - rot) * 0.02;
-
-  const radian = (rot * Math.PI) / 180;
-
-  camera.position.x = 1000 * Math.sin(radian);
-  camera.position.z = 1000 * Math.cos(radian);
-
-  camera.lookAt(new t.Vector3(0, 0, 0));
 
   render();
 };
