@@ -3,34 +3,43 @@ import Earth from "./objects/Earth";
 import Light from "./objects/Light";
 import App from "./App";
 
+const labelElement = document.querySelector<HTMLDivElement>(".label")!;
+
 const app = new App();
 
-const group = new t.Group();
-
-for (let i = 0; i < 100; i++) {
-  const earth = new Earth();
-  earth.position.x = (Math.random() - 0.5) * 2000;
-  earth.position.y = (Math.random() - 0.5) * 2000;
-  earth.position.z = (Math.random() - 0.5) * 2000;
-  earth.rotation.x = Math.random() * 2 * Math.PI;
-  earth.rotation.y = Math.random() * 2 * Math.PI;
-  earth.rotation.z = Math.random() * 2 * Math.PI;
-
-  group.add(earth);
-}
-
+const earth = new Earth();
 const light = new Light({
   type: "ambient",
   color: 0xffffff,
   position: [0, 0, 90],
 }).getObject();
 
-app.init([light, group]);
+app.init([light, earth]);
+
+let direction = "left";
 
 const tick = () => {
   requestAnimationFrame(tick);
 
-  group.rotation.y += 0.01
+  earth.rotation.y += 0.01;
+
+  const worldPosition = earth.getWorldPosition(new t.Vector3());
+
+  if (direction === "right") {
+    earth.position.x += 5;
+    earth.position.y -= 5;
+    earth.position.z += 5;
+  }
+  if (direction === "left") {
+    earth.position.x -= 5;
+    earth.position.y += 5;
+    earth.position.z -= 5;
+  }
+
+  if (earth.position.x === 300) direction = "left";
+  if (earth.position.x === -300) direction = "right";
+
+  labelElement.innerHTML = `x: ${worldPosition.x}<br />y: ${worldPosition.y}<br />z: ${worldPosition.z}`;
 
   app.render();
 };

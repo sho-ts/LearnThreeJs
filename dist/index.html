@@ -14,9 +14,22 @@
       #root {
         overflow: hidden;
       }
+      .container {
+        position: relative;
+      }
+      .label {
+        position: absolute;
+        background-color: white;
+        top: 0;
+        right: 0;
+        width: 100px;
+      }
     </style>
   </head>
   <body>
-    <canvas id="root"></canvas>
+    <div class="container">
+      <canvas id="root"></canvas>
+      <div class="label">teset</div>
+    </div>
   </body>
 </html>
